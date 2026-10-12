@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a16">
+  <title>ONLY YOU — Sana Özel Bir Evren</title>
+  
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/scenes.css">
+</head>
+<body>
+
+  <!-- Arka Plan Parçacık Canvas'ı -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <main id="app">
+    
+    <!-- SAHNE 1: THE AWAKENING -->
+    <section id="scene-awakening" class="scene active" aria-labelledby="awakening-title">
+      <div class="glass-card scene-card">
+        <p class="subtitle" id="awakening-subtitle">Sana özel bir evren hazırladım...</p>
+        <h1 id="awakening-title" class="title-main">Merhaba, Aşkım.</h1>
+        
+        <div class="heart-container" id="heart-trigger" role="button" tabindex="0" aria-label="Kalbime Dokun">
+          <svg class="heart-svg" viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <radialGradient id="heartGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#ff758c" />
+                <stop offset="100%" stop-color="#ff7eb3" />
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <path d="M 50,30 A 20,20 0 0,0 10,50 C 10,70 35,85 50,95 C 65,85 90,70 90,50 A 20,20 0 0,0 50,30 Z" 
+                  fill="url(#heartGrad)" filter="url(#glow)" />
+          </svg>
+          <div class="orbit-ring"></div>
+        </div>
+
+        <button class="btn btn-primary" id="btn-awakening">Kalbime Dokun</button>
+      </div>
+    </section>
+
+    <!-- SAHNE 2: LOVE QUESTIONS -->
+    <section id="scene-quiz" class="scene" aria-labelledby="quiz-question">
+      <div class="glass-card scene-card">
+        <div class="progress-bar-container" aria-hidden="true">
+          <div class="progress-bar-fill" id="quiz-progress"></div>
+        </div>
+        <p class="step-indicator" id="quiz-step">Soru 1 / 4</p>
+        
+        <h2 id="quiz-question" class="title-sub">Soru yükleniyor...</h2>
+        
+        <div class="options-grid" id="quiz-options"></div>
+        
+        <div id="quiz-feedback" class="feedback-msg" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- SAHNE 3: LOVE ARCADE -->
+    <section id="scene-arcade" class="scene" aria-labelledby="arcade-title">
+      <div class="glass-card scene-card full-width-card">
+        <h2 id="arcade-title" class="title-sub">Aşk Oyunları</h2>
+        <div class="arcade-tabs" role="tablist">
+          <button class="tab-btn active" id="tab-game1" role="tab" aria-selected="true">Kalp Avcısı</button>
+          <button class="tab-btn" id="tab-game2" role="tab" aria-selected="false">Aşk Yapbozu</button>
+        </div>
+
+        <!-- OYUN 1: KALP AVCISI -->
+        <div id="game1-container" class="game-view active">
+          <div class="game-hud">
+            <span>Skor: <strong id="game1-score">0</strong>/<span id="game1-target">10</span></span>
+            <span>Kalan Süre: <strong id="game1-timer">15</strong>s</span>
+          </div>
+          <div id="game1-area" class="game-area">
+            <p class="game-instruction">Ekranda beliren kalplere dokunarak hedefe ulaş!</p>
+            <button class="btn btn-primary" id="btn-start-game1">Oyuna Başla</button>
+          </div>
+        </div>
+
+        <!-- OYUN 2: KALP PUZZLE -->
+        <div id="game2-container" class="game-view">
+          <p class="game-instruction">Parçaları doğru sıraya dizerek aşk kalbini tamamla!</p>
+          <div id="puzzle-board" class="puzzle-grid"></div>
+          <p id="puzzle-status" class="feedback-msg"></p>
+        </div>
+
+        <button class="btn btn-secondary hidden" id="btn-arcade-next">Gizli Mektuba Geç</button>
+      </div>
+    </section>
+
+    <!-- SAHNE 4: THE SECRET LETTER -->
+    <section id="scene-letter" class="scene" aria-labelledby="letter-title">
+      <h2 id="letter-title" class="sr-only">Gizli Mektup</h2>
+      
+      <div class="envelope-wrapper" id="envelope">
+        <div class="envelope-back"></div>
+        <div class="envelope-paper" id="letter-paper">
+          <div class="letter-content" id="letter-text" aria-live="polite"></div>
+          <button class="btn btn-small" id="btn-skip-letter">Tamamını Göster</button>
+        </div>
+        <div class="envelope-cover"></div>
+        <div class="envelope-tap-hint" id="envelope-hint">Mektubu Açmak İçin Dokun</div>
+      </div>
+
+      <button class="btn btn-primary hidden" id="btn-letter-next">Sonsuzluğa Adım At</button>
+    </section>
+
+    <!-- SAHNE 5: FOREVER -->
+    <section id="scene-forever" class="scene" aria-labelledby="forever-title">
+      <div class="glass-card scene-card">
+        <div class="galactic-heart">
+          <svg viewBox="0 0 100 100" class="forever-svg" aria-hidden="true">
+            <path d="M 50,30 A 20,20 0 0,0 10,50 C 10,70 35,85 50,95 C 65,85 90,70 90,50 A 20,20 0 0,0 50,30 Z" 
+                  fill="url(#heartGrad)" filter="url(#glow)"/>
+          </svg>
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring delay"></div>
+        </div>
+
+        <h1 id="forever-title" class="title-main">Sonsuza Kadar...</h1>
+        <p id="forever-message" class="text-body"></p>
+        <p id="forever-signature" class="signature-text"></p>
+
+        <button class="btn btn-outline" id="btn-restart">Bu Evreni Yeniden Keşfet</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
